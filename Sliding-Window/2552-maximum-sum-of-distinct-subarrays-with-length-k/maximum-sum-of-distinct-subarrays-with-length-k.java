@@ -6,18 +6,16 @@ class Solution {
         long maxSum=0,sum=0;
         for(int j=0;j<n;j++){
             sum+=nums[j];
-            s.put(nums[j],s.getOrDefault(nums[j],0)+1);
+            int l = s.getOrDefault(nums[j],-1);
 
-            if(j-i+1 > k){
+            while(i<=l || j-i+1>k){
                 sum-=nums[i];
-                s.put(nums[i],s.get(nums[i])-1);
-                if(s.get(nums[i])==0) s.remove(nums[i]);
                 i++;
             }
-            if(s.size()==k && j-i+1 == k){
+            if( j-i+1 == k){
                 maxSum = Math.max(maxSum,sum);
             }
-
+            s.put(nums[j],j);
             
         }
         return maxSum;
