@@ -1,22 +1,21 @@
-class Solution {    
+class Solution {
     public int minOperations(int[] nums, int x) {
         int sum = 0;
-        for(int n:nums) sum+=n;
-        int target = sum - x;
-        int curSum = 0;
-        int maxWindow = -1;
+        for(int num:nums) sum+=num;
+        int t = sum-x;
         int j=0;
+        int window_max=-1;
+        int curSum=0;
         for(int i=0;i<nums.length;i++){
-            curSum +=nums[i];
-
-            while(j<=i && target<curSum){
+            curSum += nums[i];
+            while(j<=i && t<curSum){
                 curSum-=nums[j];
                 j++;
             }
-            if(curSum == target){
-                maxWindow = Math.max(maxWindow, i-j+1);
+            if(curSum==t){
+                window_max = Math.max(window_max,i-j+1);
             }
         }
-        return maxWindow==-1?-1:nums.length-maxWindow;
+        return window_max==-1?-1:nums.length-window_max;
     }
 }
