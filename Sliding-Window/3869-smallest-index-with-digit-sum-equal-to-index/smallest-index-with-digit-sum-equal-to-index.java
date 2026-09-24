@@ -13,7 +13,6 @@ class Solution {
         int c=0;
         for(int i=0;i<nums.length;i++){
             int sum = sumOfDigits(nums[i]);
-            System.out.println(sum);
             if(sum==i){
                 return i;
             }
