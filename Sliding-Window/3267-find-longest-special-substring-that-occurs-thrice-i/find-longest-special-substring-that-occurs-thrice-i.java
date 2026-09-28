@@ -1,19 +1,28 @@
 class Solution {
     public int maximumLength(String s) {
         int n = s.length();
-        Map<String,Integer> m = new HashMap<>();
+        int[][]m = new int[26][n+1];
+        int len=0;char prev=s.charAt(0);
         for(int i=0;i<n;i++){
-            for(int j=i+1;j<=n;j++){
-                String sub = s.substring(i,j);
-                boolean isSingleChar = !sub.isEmpty() && sub.chars().distinct().count() == 1;
-                if(isSingleChar) m.put(sub,m.getOrDefault(sub,0)+1);
+            char curr = s.charAt(i);
+            if(prev == curr){
+                len+=1;
+                m[curr-'a'][len]++;
+            }else{
+                len=1;
+                m[curr-'a'][len]++;
+                prev = curr;
             }
         }
         int maxLen = -1;
-        for(Map.Entry<String,Integer> e : m.entrySet()){
-            if(e.getValue() >= 3){
-                // System.out.println(e.getKey() + " " + e.getKey().length() + " "+e.getValue());
-                maxLen = Math.max(maxLen,e.getKey().length());
+        for(int i=0;i<26;i++){
+            int currSum = 0;
+            for(int j=n;j>=1;j--){
+                currSum+=m[i][j];
+                if(currSum>=3){
+                    maxLen = Math.max(maxLen,j);
+                    break;
+                }
             }
         }
         return maxLen;
