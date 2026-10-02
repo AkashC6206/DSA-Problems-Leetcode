@@ -20,8 +20,8 @@ class Solution {
             int nElemExist = frequency[x];
             int nElements = prefixSum[right] - prefixSum[left-1];
 
-            int canChange = Math.min(nElements-nElemExist, numOperations);
-            ans = Math.max(canChange+nElemExist,ans);
+            int canChange = Math.min(nElements, nElemExist+numOperations);
+            ans = Math.max(canChange,ans);
         }
 
         return ans;        
