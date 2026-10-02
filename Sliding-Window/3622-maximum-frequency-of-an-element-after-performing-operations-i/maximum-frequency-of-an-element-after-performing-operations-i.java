@@ -18,7 +18,6 @@ class Solution {
             int left = Math.max(1, x-k);
             int right = Math.min(x+k, maxValue);
             int nElemExist = frequency[x];
-            System.out.println(frequency[x]);
             int nElements = prefixSum[right] - prefixSum[left-1];
 
             int canChange = Math.min(nElements-nElemExist, numOperations);
