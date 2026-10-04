@@ -22,7 +22,7 @@ class Solution {
         left = 0;
 
         for(right=0;right<n;right++){
-            while(left<n && nums[left] + (k*2) < nums[right]){
+            while(left<n && nums[right] - nums[left] > (k*2)){
                 left++;
             }
             maxOps = right - left +1;
