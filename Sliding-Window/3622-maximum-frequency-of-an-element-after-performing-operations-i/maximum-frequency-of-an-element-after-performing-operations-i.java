@@ -2,28 +2,33 @@ class Solution {
     public int maxFrequency(int[] nums, int k, int numOperations) {
         Arrays.sort(nums);
         int n = nums.length;
-        int maxValue = nums[n-1]+k;
-        int ans=1;
-        int[]frequency = new int[maxValue+1];
-        Arrays.fill(frequency,0);
-        int[] prefixSum = new int[maxValue+1];
-        for(int num: nums){
-            frequency[num]++;
-            prefixSum[num]++;
+        int ans=0;
+        Map<Integer,Integer> m = new HashMap<>();
+        int left = 0;
+        int right = 0;
+        int maxOps = 0;
+        for(int x: nums){
+            while(right<n && nums[right]<=x+k){
+                m.put(nums[right], m.getOrDefault(nums[right],0)+1);
+                right++;
+            }
+            while(left<n && nums[left] < x-k){
+                m.put(nums[left],m.get(nums[left])-1);
+                left++;
+            }
+            maxOps = right - left - m.get(x);
+            ans = Math.max(ans , Math.min(maxOps, numOperations)+m.get(x));
         }
-        for(int idx=1;idx<maxValue+1;idx++){
-            prefixSum[idx] += prefixSum[idx-1];
-        }
-        for(int x=nums[0];x<nums[n-1]+1;x++){
-            int left = Math.max(1, x-k);
-            int right = Math.min(x+k, maxValue);
-            int nElemExist = frequency[x];
-            int nElements = prefixSum[right] - prefixSum[left-1];
+        left = 0;
 
-            int canChange = Math.min(nElements, nElemExist+numOperations);
-            ans = Math.max(canChange,ans);
+        for(right=0;right<n;right++){
+            while(left<n && nums[left] + (k*2) < nums[right]){
+                left++;
+            }
+            maxOps = right - left +1;
+            ans = Math.max(ans, Math.min(maxOps,numOperations));
         }
 
-        return ans;        
+        return ans;
     }
 }
